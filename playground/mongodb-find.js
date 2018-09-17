@@ -1,37 +1,30 @@
-//const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 
-const {MongoClient,ObjectID} = require('mongodb');
+MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
+  if (err) {
+    return console.log('Unable to connect to MongoDB server');
+  }
+  console.log('Connected to MongoDB server');
 
-var obj = new ObjectID();
+  // db.collection('Todos').find({
+  //   _id: new ObjectID('57bb36afb3b6a3801d8c479d')
+  // }).toArray().then((docs) => {
+  //   console.log('Todos');
+  //   console.log(JSON.stringify(docs, undefined, 2));
+  // }, (err) => {
+  //   console.log('Unable to fetch todos', err);
+  // });
 
-console.log(obj);
+  // db.collection('Todos').find().count().then((count) => {
+  //   console.log(`Todos count: ${count}`);
+  // }, (err) => {
+  //   console.log('Unable to fetch todos', err);
+  // });
 
-MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
-    if(err){
-       return console.log('Unable to connect to DB')
-    }
+  db.collection('Users').find({name: 'Andrew'}).toArray().then((docs) => {
+    console.log(JSON.stringify(docs, undefined, 2));
+  });
 
-    console.log('Connected to MongoDB server');
-
-    // db.collection('Todos').find({_id: new ObjectID('5b92b2ac5ff12f3b10ad29df')}).toArray().then((docs)=>{
-    //     console.log('Todos');
-    //     console.log(JSON.stringify(docs,undefined,2));
-    // },(err)=>{
-    //     console.log('unable to fetch',err);
-    // });;
-
-    // db.collection('Todos').find().count().then((count)=>{
-    //     console.log(`Todos count : ${count}`)
-    // },(err)=>{
-    //     console.log('unable to fetch',err);
-    // });
-
-    db.collection('Users').find({name: 'Richerd'}).toArray().then((docs)=>{
-             
-             console.log(JSON.stringify(docs,undefined,2));
-         },(err)=>{
-             console.log('unable to fetch',err);
-         });;
-   
-    db.close();
+  // db.close();
 });
